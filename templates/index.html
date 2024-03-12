@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>News Search</h1>
+    <form id="searchForm">
+        <input type="text" name="query" placeholder="Enter search term...">
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+        $('#searchForm').submit(function(e) {
+            e.preventDefault();
+            $.post('/search', $(this).serialize(), function(articles) {
+                $('#results').empty();
+                articles.forEach(function(article) {
+                    $('#results').append(`<h2>${article.title}</h2><p>${article.description}</p><a href="${article.url}" target="_blank">Read more</a>`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
